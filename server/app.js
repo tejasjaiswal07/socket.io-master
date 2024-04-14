@@ -2,10 +2,10 @@ import express from "express";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import cors from "cors";
-import jwt from "jsonwebtoken";
-import cookieParser from "cookie-parser";
+// import jwt from "jsonwebtoken";
+// import cookieParser from "cookie-parser";
 
-const secretKeyJWT = "asdasdsadasdasdasdsa";
+// const secretKeyJWT = "";
 const port = 3000;
 
 const app = express();
@@ -30,27 +30,27 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/login", (req, res) => {
-  const token = jwt.sign({ _id: "asdasjdhkasdasdas" }, secretKeyJWT);
+// app.get("/login", (req, res) => {
+//   const token = jwt.sign({ _id: "asdasjdhkasdasdas" }, secretKeyJWT);
 
-  res
-    .cookie("token", token, { httpOnly: true, secure: true, sameSite: "none" })
-    .json({
-      message: "Login Success",
-    });
-});
+//   res
+//     .cookie("token", token, { httpOnly: true, secure: true, sameSite: "none" })
+//     .json({
+//       message: "Login Success",
+//     });
+// });
 
-io.use((socket, next) => {
-  cookieParser()(socket.request, socket.request.res, (err) => {
-    if (err) return next(err);
+// io.use((socket, next) => {
+//   cookieParser()(socket.request, socket.request.res, (err) => {
+//     if (err) return next(err);
 
-    const token = socket.request.cookies.token;
-    if (!token) return next(new Error("Authentication Error"));
+//     const token = socket.request.cookies.token;
+//     if (!token) return next(new Error("Authentication Error"));
 
-    const decoded = jwt.verify(token, secretKeyJWT);
-    next();
-  });
-});
+//     const decoded = jwt.verify(token, secretKeyJWT);
+//     next();
+//   });
+// });
 
 
 io.on("connection", (socket) => {
